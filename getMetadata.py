@@ -42,11 +42,7 @@ try:
 	response = session.get(baseURL+"/api/v1/series?size=5")
 	response.raise_for_status()
 	content = response.json()
-	print("Login sucessful!\n")
-
-	# print(type(response.json()))
-	# print("\n ------ \n")
-	# print(response.json().keys())
+	print("Login to Komga sucessful!\n")
 
 except requests.exceptions.HTTPError as errh:
 	print(errh)
@@ -65,8 +61,7 @@ except requests.exceptions.RequestException as err:
 
 for series in content["content"]:
 	
-	currentSeries = Series(series["id"], sn.sanitizeName(series["name"]))
-	currentSeries.printName()
+	currentSeries = Series(series["id"], series["name"])
 
 	mr.lookupSeries(currentSeries)
 

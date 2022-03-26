@@ -10,3 +10,6 @@ class Series:
 
   def printName(self):
     print("Series Name: " + self.name)
+
+  def sanitizeName(self):
+    return sn.sanitizeName(self.name)
