@@ -2,20 +2,36 @@
 
 import requests, json
 
-import config
+import sanitizeName as sn
+
+import metaRetrieval as mr
+
+from classes import *
+
+# import config.py under verification
+
+# Verify config file
+try:
+    from config import *
+except ImportError:
+    print("Failed to find config.py, does it exist?")
+    sys.exit(1)
+
 
 # Welcome
 print("Welcome to the BooksAPI metadata retreiver\n")
 print("------\n")
 
+
+
 # Initiate Session:
 
-print("Logging in with "+config.user+" to "+config.baseURL)
+print("Logging in with "+user+" to "+baseURL+"\n")
 
 # Initiate & configure session
 session = requests.Session()
 
-session.auth(config.user, config.passwd)
+session.auth = (user, passwd)
 session.headers.update({
 	"Content-Type":"application/json",
 	})
@@ -23,16 +39,14 @@ session.headers.update({
 # Retrieve list of series from Komga
 
 try:
-	response = session.get(config.baseURL+"/api/v1/series?size=10")
+	response = session.get(baseURL+"/api/v1/series?size=5")
 	response.raise_for_status()
 	content = response.json()
-	print("The request was a success!")
+	print("Login sucessful!\n")
 
-	print(type(response.json()))
-	print("\n ------ \n")
-	print(response.json().keys())
-
-	
+	# print(type(response.json()))
+	# print("\n ------ \n")
+	# print(response.json().keys())
 
 except requests.exceptions.HTTPError as errh:
 	print(errh)
@@ -48,4 +62,16 @@ except requests.exceptions.RequestException as err:
 	sys.exit(1)
 
 # Loop to look up per library series
+
+for series in content["content"]:
+	
+	currentSeries = Series(series["id"], sn.sanitizeName(series["name"]))
+	currentSeries.printName()
+
+	mr.lookupSeries(currentSeries)
+
+	# print(series["id"]+ series["name"])
+	# seriesName = sn.sanitizeName(series["name"])
+	# print(series["metadata"])
+	# print("\n")
 
