@@ -71,7 +71,9 @@ pushJSON = '''
   komgaSeries.totalBookCount,
   )
 ```
+
 </details>
+
 ## Further Plans
 
 FuzzyWuzzy fuzzy strings matching.
