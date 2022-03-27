@@ -1,5 +1,4 @@
 # Push to Komga
 
-def patchSeries(session, komgaID, aniListSeries): # pass requests session komga id and anilist class
+def patchSeries(session, komgaSeries, aniListSeries): # pass requests session, Series and anilist class
 	print(aniListSeries.description)
-	

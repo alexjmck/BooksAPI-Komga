@@ -104,7 +104,7 @@ def lookupSeries(series): # pass Series class, returns type AniListSeries
     print("Skip series")
     return None
 
-  if 0 == content["data"]["Page"]["pageInfo"]["total"]:
+  if 0 == content["data"]["Page"]["pageInfo"]["total"]: # if no results returned, skip manga
     print("No series matching search. Skipping series")
     return None
 
@@ -150,7 +150,6 @@ def lookupSeries(series): # pass Series class, returns type AniListSeries
   # Look up series by id on AniList
 
   variablesSeries = {'id':seriesOptions[inputted]} # sets anilist id for lookup
-
 
   try:
     response = requests.post(aniListURL, json={'query': querySeries, 'variables': variablesSeries})

@@ -61,14 +61,14 @@ except requests.exceptions.RequestException as err:
 
 for series in content["content"]:
 	
-	currentSeries = Series(series["id"], series["name"])
+	currentSeries = Series(series)
 
 	aniListSeries = mr.lookupSeries(currentSeries) # passes Series class
 
 	if aniListSeries == None:
 		continue
 
-	kp.patchSeries(session, currentSeries.seriesid, aniListSeries) # passes request session komga id and anilist class
+	kp.patchSeries(session, currentSeries, aniListSeries) # passes request session Series and anilist class
 
 
 
