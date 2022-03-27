@@ -39,7 +39,7 @@ session.headers.update({
 # Retrieve list of series from Komga
 
 try:
-	response = session.get(baseURL+"/api/v1/series?size=5")
+	response = session.get(baseURL+"/api/v1/series?size=3")
 	response.raise_for_status()
 	content = response.json()
 	print("Login to Komga sucessful!\n")
@@ -63,7 +63,14 @@ for series in content["content"]:
 	
 	currentSeries = Series(series["id"], series["name"])
 
-	mr.lookupSeries(currentSeries)
+	aniListSeries = mr.lookupSeries(currentSeries) # passes Series class
+
+	if aniListSeries == None:
+		continue
+
+	patchKomga(session, Series.seriesid, aniListSeries) # passes request session komga id and anilist class
+
+
 
 	# print(series["id"]+ series["name"])
 	# seriesName = sn.sanitizeName(series["name"])

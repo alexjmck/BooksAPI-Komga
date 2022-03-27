@@ -75,13 +75,10 @@ query ($id: Int) {
 
 aniListURL = "https://graphql.anilist.co"
 
-def lookupSeries(series):
+def lookupSeries(series): # pass Series class, returns type AniListSeries
 
   searchName = series.sanitizeName()# print(searchName)
-
   variablesList = {'search':searchName}
-
-  # print(series.sanitizeName())
 
   # get paged results 
 
@@ -89,24 +86,23 @@ def lookupSeries(series):
     response = requests.post(aniListURL, json={'query': queryList, 'variables': variablesList})
     content = response.json()
     response.raise_for_status()
-    print("Login to Komga sucessful!\n")
 
   except requests.exceptions.HTTPError as errh:
     print(errh)
     print("Skip series")
-    return
+    return None
   except requests.exceptions.ConnectionError as errc:
     print(errc)
     print("Skip series")
-    return
+    return None
   except requests.exceptions.Timeout as errt:
     print(errt)
     print("Skip series")
-    return
+    return None
   except requests.exceptions.RequestException as err:
     print(err)
     print("Skip series")
-    return
+    return None
 
 
   # Select matching series:
@@ -118,27 +114,23 @@ def lookupSeries(series):
   for resultSeries in content["data"]["Page"]["media"]:
     seriesOptions.append(int(resultSeries["id"]))
 
-  # Print Name for seleection. SOmetimes english returns as null. 
+  # Print Name for seleection. SOmetimes english returns as None. 
     if resultSeries["title"]["english"] != None:
       print(str(len(seriesOptions))+ ") "+ str(resultSeries["id"]) + " -  " +resultSeries["title"]["english"]+ " - " + resultSeries["title"]["romaji"])
     elif resultSeries["title"]["romaji"] != None:
       print(str(len(seriesOptions))+ ") "+ str(resultSeries["id"]) + " - " +resultSeries["title"]["romaji"])
     else:
-      return
-
-  print("\nNone of the above, skip series lookup (n)\n")
+      return None
 
   inputted = input("Enter the correct matching number. If none type 'n': ")
 
   if inputted == 'n':
-    print("None matched, series skipped")
-    return
+    print("None matched, series skipped\n")
+    return None
 
   inputted = int(inputted) - 1 
-  print(seriesOptions[inputted])
-  print(content["data"]["Page"]["media"][inputted])
-
-  type(inputted)
+  # print(seriesOptions[inputted])
+  # print(content["data"]["Page"]["media"][inputted])
 
   # Look up series by id on AniList
 
@@ -155,22 +147,23 @@ def lookupSeries(series):
   except requests.exceptions.HTTPError as errh:
     print(errh)
     print("Skip series")
-    return
+    return None
   except requests.exceptions.ConnectionError as errc:
     print(errc)
     print("Skip series")
-    return
+    return None
   except requests.exceptions.Timeout as errt:
     print(errt)
     print("Skip series")
-    return
+    return None
   except requests.exceptions.RequestException as err:
     print(err)
     print("Skip series")
-    return
-  print(content)
+    return None
 
+  aniListRetrieved = AniListSeries(seriesOptions[inputted], content) #passes id and json returned.
 
+  return aniListRetrieved
 
 
 
