@@ -19,7 +19,8 @@ Currently the script asks the user to verify the match before committing to fetc
 You can expect the script to pull all fields from Komga. It will only update *unlocked* fields. When it updates a field it will lock it 
 <details>
 
-<summary>**Currently it updates fields with the following JSON**</summary>
+<summary>Currently it updates fields with the following JSON</summary>
+
 ```
 pushJSON = '''
 {
@@ -72,6 +73,8 @@ pushJSON = '''
 ```
 </details>
 ## Further Plans
+
+FuzzyWuzzy fuzzy strings matching.
 
 I may look into saving the data into ComicInfo.xml files. Maybe.
 
