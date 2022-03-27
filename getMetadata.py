@@ -6,6 +6,8 @@ import sanitizeName as sn
 
 import metaRetrieval as mr
 
+import komgaPatch as kp
+
 from classes import *
 
 # import config.py under verification
@@ -19,14 +21,12 @@ except ImportError:
 
 
 # Welcome
+print("\n-----\n")
 print("Welcome to the BooksAPI metadata retreiver\n")
-print("------\n")
-
-
 
 # Initiate Session:
 
-print("Logging in with "+user+" to "+baseURL+"\n")
+print("Logging in with "+user+" to "+baseURL)
 
 # Initiate & configure session
 session = requests.Session()
@@ -68,7 +68,7 @@ for series in content["content"]:
 	if aniListSeries == None:
 		continue
 
-	patchKomga(session, Series.seriesid, aniListSeries) # passes request session komga id and anilist class
+	kp.patchSeries(session, currentSeries.seriesid, aniListSeries) # passes request session komga id and anilist class
 
 
 

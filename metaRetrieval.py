@@ -106,6 +106,7 @@ def lookupSeries(series): # pass Series class, returns type AniListSeries
 
 
   # Select matching series:
+  print("------\n")
   print("For "+ series.name)
   print("Select the following matching series from AniList:\n")
 
@@ -114,7 +115,7 @@ def lookupSeries(series): # pass Series class, returns type AniListSeries
   for resultSeries in content["data"]["Page"]["media"]:
     seriesOptions.append(int(resultSeries["id"]))
 
-  # Print Name for seleection. SOmetimes english returns as None. 
+  # Print Name for seleection. Sometimes english returns as None. 
     if resultSeries["title"]["english"] != None:
       print(str(len(seriesOptions))+ ") "+ str(resultSeries["id"]) + " -  " +resultSeries["title"]["english"]+ " - " + resultSeries["title"]["romaji"])
     elif resultSeries["title"]["romaji"] != None:
@@ -124,16 +125,24 @@ def lookupSeries(series): # pass Series class, returns type AniListSeries
 
   inputted = input("Enter the correct matching number. If none type 'n': ")
 
-  if inputted == 'n':
-    print("None matched, series skipped\n")
-    return None
+  while True: # validate input is a number or 'n'
+    if inputted == 'n':
+      print("None matched, series skipped\n")
+      return None
+    try:
+      inputted = int(inputted) - 1
+    except:
+      inputted = input("Input must be one of the above or 'n': ")
+      continue
 
-  inputted = int(inputted) - 1 
-  # print(seriesOptions[inputted])
-  # print(content["data"]["Page"]["media"][inputted])
+    if 0 <= inputted and inputted < len(seriesOptions):
+      break
+    else:
+      inputted = type("Input must be one of the above or 'n': ")
+      continue
+
 
   # Look up series by id on AniList
-
 
   variablesSeries = {'id':seriesOptions[inputted]} # sets anilist id for lookup
 
