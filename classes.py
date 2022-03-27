@@ -13,3 +13,7 @@ class Series:
 
   def sanitizeName(self):
     return sn.sanitizeName(self.name)
+
+class AniListSeries:
+  def __init__(self, id):
+    self.id = id

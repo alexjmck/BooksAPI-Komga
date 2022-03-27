@@ -3,8 +3,8 @@ import requests, json
 
 from classes import *
 
-
-query = '''
+# Retrieve list of possible matches query
+queryList = '''
 query($search: String) {
   Page(page:1, perPage:5){
     pageInfo {
@@ -26,6 +26,52 @@ query($search: String) {
   }
 }
 '''
+# Retrieve exact match from id
+querySeries = '''
+query ($id: Int) {
+  Media(id: $id, type: MANGA) {
+    id
+    type
+    title {
+      romaji
+      english
+      native
+    }
+    description
+    isAdult
+    status
+    volumes
+    genres
+    tags {
+      id
+      name
+      isMediaSpoiler
+      isAdult
+    }
+    staff {
+      edges {
+        role
+        node {
+          id
+        }
+      }
+      nodes {
+        id
+        name {
+          first
+          middle
+          last
+          full
+          native
+          userPreferred
+        }
+      }
+    }
+  }
+}
+'''
+
+# Start of code 
 
 aniListURL = "https://graphql.anilist.co"
 
@@ -33,14 +79,14 @@ def lookupSeries(series):
 
   searchName = series.sanitizeName()# print(searchName)
 
-  variables = {'search':searchName}
+  variablesList = {'search':searchName}
 
   # print(series.sanitizeName())
 
   # get paged results 
 
   try:
-    response = requests.post(aniListURL, json={'query': query, 'variables': variables})
+    response = requests.post(aniListURL, json={'query': queryList, 'variables': variablesList})
     content = response.json()
     response.raise_for_status()
     print("Login to Komga sucessful!\n")
@@ -96,6 +142,33 @@ def lookupSeries(series):
 
   # Look up series by id on AniList
 
+
+  variablesSeries = {'id':seriesOptions[inputted]} # sets anilist id for lookup
+
+
+  try:
+    response = requests.post(aniListURL, json={'query': querySeries, 'variables': variablesSeries})
+    content = response.json()
+    response.raise_for_status()
+    print("Series fetched sucessful!\n")
+
+  except requests.exceptions.HTTPError as errh:
+    print(errh)
+    print("Skip series")
+    return
+  except requests.exceptions.ConnectionError as errc:
+    print(errc)
+    print("Skip series")
+    return
+  except requests.exceptions.Timeout as errt:
+    print(errt)
+    print("Skip series")
+    return
+  except requests.exceptions.RequestException as err:
+    print(err)
+    print("Skip series")
+    return
+  print(content)
 
 
 
