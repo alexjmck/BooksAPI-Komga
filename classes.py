@@ -58,7 +58,7 @@ class Series:
 # AniList Series class
 class AniListSeries:
 
-  def __init__(self, id, content):# Accepts response.json() content from a request and parses the data into the object
+  def __init__(self, content):# Accepts response.json() content from a request and parses the data into the object
     # TODO implement id check
     self.media = content["data"]["Media"]
 
@@ -94,3 +94,5 @@ class AniListSeries:
 #       userPreferred
 #     }
 #   }
+
+

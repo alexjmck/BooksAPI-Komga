@@ -155,6 +155,13 @@ def lookupSeries(series): # pass Series class, returns type AniListSeries
     response = requests.post(aniListURL, json={'query': querySeries, 'variables': variablesSeries})
     content = response.json()
     response.raise_for_status()
+    
+
+    # verify retreived json is correct id
+    if content["data"]["Media"]["id"] != seriesOptions[inputted]:
+      print("AniList did not return correct series by id, skipping...")
+      return None
+
     print("Series fetched sucessful!\n")
 
   except requests.exceptions.HTTPError as errh:
@@ -174,7 +181,9 @@ def lookupSeries(series): # pass Series class, returns type AniListSeries
     print("Skip series")
     return None
 
-  aniListRetrieved = AniListSeries(seriesOptions[inputted], content) #passes id and json returned.
+  print(content)
+  print("\n")
+  aniListRetrieved = AniListSeries(content) #json returned.
 
   return aniListRetrieved
 

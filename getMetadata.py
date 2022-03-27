@@ -62,11 +62,15 @@ except requests.exceptions.RequestException as err:
 for series in content["content"]:
 	
 	currentSeries = Series(series)
+	print(series["metadata"])
+	print("\n")
 
 	aniListSeries = mr.lookupSeries(currentSeries) # passes Series class
 
 	if aniListSeries == None:
 		continue
+
+	print("\n")
 
 	kp.patchSeries(session, currentSeries, aniListSeries) # passes request session Series and anilist class
 
