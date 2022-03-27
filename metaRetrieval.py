@@ -104,6 +104,9 @@ def lookupSeries(series): # pass Series class, returns type AniListSeries
     print("Skip series")
     return None
 
+  if 0 == content["data"]["Page"]["pageInfo"]["total"]:
+    print("No series matching search. Skipping series")
+    return None
 
   # Select matching series:
   print("------\n")
@@ -111,6 +114,7 @@ def lookupSeries(series): # pass Series class, returns type AniListSeries
   print("Select the following matching series from AniList:\n")
 
   seriesOptions = []
+  inputted = None
   # print(content["data"])
   for resultSeries in content["data"]["Page"]["media"]:
     seriesOptions.append(int(resultSeries["id"]))
@@ -121,6 +125,7 @@ def lookupSeries(series): # pass Series class, returns type AniListSeries
     elif resultSeries["title"]["romaji"] != None:
       print(str(len(seriesOptions))+ ") "+ str(resultSeries["id"]) + " - " +resultSeries["title"]["romaji"])
     else:
+      print("No English or romaji title")
       return None
 
   inputted = input("Enter the correct matching number. If none type 'n': ")
