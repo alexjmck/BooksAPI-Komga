@@ -120,6 +120,12 @@ The script will be ready to run. Depending on your python installation:
 
 ## Further Plans
 
+**remove html formating in summaries**
+
+**List Synonyms for titles in the matching, and year**
+
+Manga (South Korean) should make reading directions webtoon
+
 FuzzyWuzzy fuzzy strings matching.
 
 I may look into saving the data into ComicInfo.xml files. Maybe.

@@ -1,5 +1,9 @@
 # Push to Komga
 
+import requests, json
+
+from config import *
+
 def patchSeries(session, komgaSeries, aniListSeries): # pass requests session, Series and anilist class
 
   # Assign Anilist data to komga object
@@ -39,8 +43,8 @@ def patchSeries(session, komgaSeries, aniListSeries): # pass requests session, S
 
   # ---- reading direction
   if komgaSeries.readingDirectionLock == False and aniListSeries.type == "MANGA":
-    komgaSeries.readingDirection == "RIGHT_TO_LEFT"
-    komgaSeries.readingDirectionLock == True
+    komgaSeries.readingDirection = "RIGHT_TO_LEFT"
+    komgaSeries.readingDirectionLock = True
 
   # ---- Age rating
   if komgaSeries.ageRatingLock == False and aniListSeries.isAdult == True:
@@ -49,7 +53,7 @@ def patchSeries(session, komgaSeries, aniListSeries): # pass requests session, S
 
   # ---- Language == English
   if komgaSeries.languageLock == False:
-    komgaSeries.language = "English"
+    komgaSeries.language = "en-US"
     komgaSeries.languageLock = True
 
   # ---- Genres
@@ -72,96 +76,76 @@ def patchSeries(session, komgaSeries, aniListSeries): # pass requests session, S
     komgaSeries.tags = tagsParsed
     komgaSeries.tagsLock = True
 
-  print("verify passed " + aniListSeries.titleEnglish)
+  # print("verify passed " + aniListSeries.titleEnglish)
 
-  # passing these lists into a string
-  patchTags = "[\n\""+'\"\n\"'.join(komgaSeries.tags)+"\"\n]"
-  patchGenres = "[\n\""+'\"\n\"'.join(komgaSeries.genres)+"\"\n]"
-
+  # dictionary for bool to turn lower case for Komga
+  boolDict = {
+    True: 'true',
+    False: 'false'
+  }
+  
   # input variables to json string
-  pushJSON = '''
-{
-  "status": "%s",
-  "statusLock": %r,
-  "title": "%s",
-  "titleLock": %r,
-  "titleSort": "%s",
-  "titleSortLock": %r,
-  "summary": "%s",
-  "summaryLock": %r,
-  "publisher": "%s",
-  "publisherLock": %r,
-  "readingDirectionLock": %r,
-  "ageRatingLock": %r,
-  "language": "%s",
-  "languageLock": %r,
-  "genresLock": %r,
-  "tagsLock": %s,
-  "totalBookCountLock": %r,
-  "tags": %s,
-  "readingDirection": "%s",
-  "ageRating": %s,
-  "genres": %s,
-  "totalBookCount": %s,
+  pushJSONDict = {
+  "status": komgaSeries.status,
+  "statusLock": boolDict[komgaSeries.statusLock],
+  "title": komgaSeries.title,
+  "titleLock": boolDict[komgaSeries.titleLock],
+  "titleSort": komgaSeries.titleSort,
+  "titleSortLock": boolDict[komgaSeries.titleSortLock],
+  "summary": komgaSeries.summary,
+  "summaryLock": boolDict[komgaSeries.summaryLock],
+  "publisher": komgaSeries.publisher,
+  "publisherLock": boolDict[komgaSeries.publisherLock],
+  "readingDirectionLock": boolDict[komgaSeries.readingDirectionLock],
+  "ageRatingLock": boolDict[komgaSeries.ageRatingLock],
+  "language": komgaSeries.language,
+  "languageLock": boolDict[komgaSeries.languageLock],
+  "genresLock": boolDict[komgaSeries.genresLock],
+  "tagsLock": boolDict[komgaSeries.tagsLock],
+  "totalBookCountLock": boolDict[komgaSeries.totalBookCountLock],
+  "tags": komgaSeries.tags,
+  "readingDirection": komgaSeries.readingDirection,
+  "ageRating": komgaSeries.ageRating,
+  "genres": komgaSeries.genres,
+  "totalBookCount": komgaSeries.totalBookCount,
 }
-''' % (komgaSeries.status,
-  komgaSeries.statusLock, 
-  komgaSeries.title, 
-  komgaSeries.titleLock,
-  komgaSeries.titleSort,
-  komgaSeries.titleSortLock,
-  komgaSeries.summary,
-  komgaSeries.summaryLock,
-  komgaSeries.publisher,
-  komgaSeries.publisherLock,
-  komgaSeries.readingDirectionLock,
-  komgaSeries.ageRatingLock,
-  komgaSeries.language,
-  komgaSeries.languageLock,
-  komgaSeries.genresLock,
-  komgaSeries.tagsLock,
-  komgaSeries.totalBookCountLock,
-  patchTags,
-  komgaSeries.readingDirection,
-  komgaSeries.ageRating,
-  patchGenres,
-  komgaSeries.totalBookCount,
-  )
-
-  print(pushJSON)
 
 
-# 	pushJSON = '''
-# {
-#   "status": "ENDED",
-#   "statusLock": true,
-#   "title": "string",
-#   "titleLock": true,
-#   "titleSort": "string",
-#   "titleSortLock": true,
-#   "summary": "string",
-#   "summaryLock": true,
-#   "publisher": "string",
-#   "publisherLock": true,
-#   "readingDirectionLock": true,
-#   "ageRatingLock": true,
-#   "language": "string",
-#   "languageLock": true,
-#   "genresLock": true,
-#   "tagsLock": true,
-#   "totalBookCountLock": true,
-#   "sharingLabelsLock": true,
-#   "tags": [
-#     "string"
-#   ],
-#   "readingDirection": "LEFT_TO_RIGHT",
-#   "ageRating": 0,
-#   "genres": [
-#     "string"
-#   ],
-#   "totalBookCount": 0,
-#   "sharingLabels": [
-#     "string"
-#   ]
-# }
-# '''
+  # print(pushJSONDict)
+
+  # Patch request
+  try:
+    responsePatch = session.patch(baseURL + "/api/v1/series/" + komgaSeries.seriesid + "/metadata", data=json.dumps(pushJSONDict))
+    
+    # verify if updated right
+    if responsePatch.json() != None:
+      print("did not return 204")
+      print(responsePatch.json())
+
+    responsePatch.raise_for_status()
+
+    print("Series updated sucessfully!\n")
+
+  except requests.exceptions.HTTPError as errh:
+    print(errh)
+    print("Skip series, update failed errh")
+    print(responsePatch.json())
+    raise errh
+  except requests.exceptions.ConnectionError as errc:
+    print(errc)
+    print("Skip series, update failed errc")
+    raise errc
+  except requests.exceptions.Timeout as errt:
+    print(errt)
+    print("Skip series, update failed errt")
+    raise errt
+  except requests.exceptions.RequestException as err:
+    if responsePatch.status_code == 204: # 204 is expected
+      print("Series updated sucessfully!\n")
+      return None
+    print(err)
+    print("Skip series, update failed err")
+    raise err
+
+  print("Updated series "+ komgaSeries.title)
+

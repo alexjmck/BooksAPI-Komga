@@ -6,7 +6,7 @@ from classes import *
 # Retrieve list of possible matches query
 queryList = '''
 query($search: String) {
-  Page(page:1, perPage:5){
+  Page(page:1, perPage:10){
     pageInfo {
       total
       perPage
@@ -110,7 +110,7 @@ def lookupSeries(series): # pass Series class, returns type AniListSeries
 
   # Select matching series:
   print("------\n")
-  print("For "+ series.name)
+  print("For: "+ series.name)
   print("Select the following matching series from AniList:\n")
 
   seriesOptions = []
@@ -119,7 +119,7 @@ def lookupSeries(series): # pass Series class, returns type AniListSeries
   for resultSeries in content["data"]["Page"]["media"]:
     seriesOptions.append(int(resultSeries["id"]))
 
-  # Print Name for seleection. Sometimes english returns as None. 
+  # Print Name for selection. Sometimes english returns as None. 
     if resultSeries["title"]["english"] != None:
       print(str(len(seriesOptions))+ ") "+ str(resultSeries["id"]) + " -  " +resultSeries["title"]["english"]+ " - " + resultSeries["title"]["romaji"])
     elif resultSeries["title"]["romaji"] != None:
@@ -132,6 +132,7 @@ def lookupSeries(series): # pass Series class, returns type AniListSeries
 
   while True: # validate input is a number or 'n'
     if inputted == 'n':
+      print("------\n")
       print("None matched, series skipped\n")
       return None
     try:
@@ -162,7 +163,7 @@ def lookupSeries(series): # pass Series class, returns type AniListSeries
       print("AniList did not return correct series by id, skipping...")
       return None
 
-    print("Series fetched sucessful!\n")
+    print("\nSeries fetched sucessful!")
 
   except requests.exceptions.HTTPError as errh:
     print(errh)
@@ -181,8 +182,7 @@ def lookupSeries(series): # pass Series class, returns type AniListSeries
     print("Skip series")
     return None
 
-  print(content)
-  print("\n")
+
   aniListRetrieved = AniListSeries(content) #json returned.
 
   return aniListRetrieved
