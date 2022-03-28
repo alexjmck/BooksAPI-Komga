@@ -1,10 +1,10 @@
 # Meta Search for Komga
 
-This is a supplimentary tool for [https://github.com/gotson/komga](Gotson's Komga Library software)
+This is a supplimentary tool for [Gotsons Komga Library software](https://github.com/gotson/komga)
 
 Retriving metadata for Komga comics using AniList. The motivation behind this project is to match content with metadata in my Komga library that has been aquired from various DRM Free sources like Humble Bundle.
 
-This project was inspired by the [https://github.com/Pfuenzle/AnisearchKomga](AniSearchKomga) script.
+This project was inspired by the [AniSearchKomga](https://github.com/Pfuenzle/AnisearchKomga) script.
 
 The goal is to pull data from aniList's Manga database.
 
