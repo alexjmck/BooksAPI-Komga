@@ -17,6 +17,13 @@ def patchSeries(session, komgaSeries, aniListSeries): # pass requests session, S
     'CANCELLED': 'ABANDONED',
     'HIATUS': 'HIATUS'
   }
+
+  readingDirectionDict = {
+    'JP': "RIGHT_TO_LEFT",
+    'KR': " WEBTOON"
+  }
+
+
   # NOT_YET_RELEASED -> skip
   if aniListSeries.status != "NOT_YET_RELEASED" and komgaSeries.statusLock == False:
     komgaSeries.status = statusDict[aniListSeries.status]
@@ -37,13 +44,14 @@ def patchSeries(session, komgaSeries, aniListSeries): # pass requests session, S
     komgaSeries.titleSortLock = True
 
   # ---- Summary
-  if komgaSeries.summaryLock == False:
+  # if komgaSeries.summaryLock == True:
+  if 1==1:
     komgaSeries.summary = aniListSeries.description
     komgaSeries.summaryLock = True
 
   # ---- reading direction
-  if komgaSeries.readingDirectionLock == False and aniListSeries.type == "MANGA":
-    komgaSeries.readingDirection = "RIGHT_TO_LEFT"
+  if komgaSeries.readingDirectionLock == False:
+    komgaSeries.readingDirection = readingDirectionDict[aniListSeries.countryOfOrigin]
     komgaSeries.readingDirectionLock = True
 
   # ---- Age rating

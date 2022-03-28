@@ -20,7 +20,9 @@ query($search: String) {
       title {
         english
         romaji
+        native
       }
+      synonyms
     }
     
   }
@@ -37,7 +39,9 @@ query ($id: Int) {
       english
       native
     }
+    synonyms
     description
+    countryOfOrigin
     isAdult
     status
     volumes
@@ -118,10 +122,13 @@ def lookupSeries(series): # pass Series class, returns type AniListSeries
   # print(content["data"])
   for resultSeries in content["data"]["Page"]["media"]:
     seriesOptions.append(int(resultSeries["id"]))
+    synonymsString = ' \n -------- '.join(resultSeries["synonyms"])
 
   # Print Name for selection. Sometimes english returns as None. 
     if resultSeries["title"]["english"] != None:
       print(str(len(seriesOptions))+ ") "+ str(resultSeries["id"]) + " -  " +resultSeries["title"]["english"]+ " - " + resultSeries["title"]["romaji"])
+      print(" ---- Type: "+ resultSeries["type"])
+      print(" ---- Synonyms: "+ synonymsString)
     elif resultSeries["title"]["romaji"] != None:
       print(str(len(seriesOptions))+ ") "+ str(resultSeries["id"]) + " - " +resultSeries["title"]["romaji"])
     else:

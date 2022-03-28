@@ -1,8 +1,8 @@
 # A script to retrieve metadata from AniList for Komga.
 
-import requests, json
+import requests, json, re
 
-import sanitizeName as sn
+import sanitizeString as ss
 
 import metaRetrieval as mr
 
@@ -38,10 +38,16 @@ session.headers.update({
 	})
 
 # Retrieve list of series from Komga
-numSeries = input("How many series should we retreive? it will be in alphabetical order: ")
-
+print(" ")
+numSeries = None
+while True:
+	try:
+		numSeries = int(input("How many series should we retreive? it will be in alphabetical order: "))
+		break
+	except:
+		pass
 try:
-	response = session.get(baseURL+"/api/v1/series?size="+numSeries)
+	response = session.get(baseURL+"/api/v1/series?size="+str(numSeries))
 	response.raise_for_status()
 	content = response.json()
 	print("Login to Komga sucessful!\n")
@@ -60,6 +66,21 @@ except requests.exceptions.RequestException as err:
 	sys.exit(1)
 
 # Loop to look up per library series
+
+ignoreLockDict = {
+	"y": True,
+	"n": False,
+}
+
+ignoreLock = None
+while True:
+	try:
+		ignoreLock = ignoreLockDict[input("Override field locks? (y/n): ")]
+		break
+	except:
+		pass
+
+
 
 skippedSeries = []
 
@@ -93,8 +114,5 @@ if len(skippedSeries) != 0:
 else:
 	print("No series skipped")
 
-	# print(series["id"]+ series["name"])
-	# seriesName = sn.sanitizeName(series["name"])
-	# print(series["metadata"])
-	# print("\n")
+
 

@@ -1,6 +1,6 @@
 # Class definitions
 
-import sanitizeName as sn
+import sanitizeString as ss
 
 # Komga Series Class
 class Series:
@@ -51,7 +51,7 @@ class Series:
     print("Series Name: " + self.name)
 
   def sanitizeName(self):
-    return sn.sanitizeName(self.name)
+    return ss.sanitizeName(self.name)
 
 
 
@@ -67,7 +67,9 @@ class AniListSeries:
     self.titleRomaji = self.media["title"]["romaji"] # Titles
     self.titleEnglish = self.media["title"]["english"]
     self.titleNative = self.media["title"]["native"]
-    self.description = self.media["description"]
+    self.synonyms = self.media["synonyms"]
+    self.description = ss.sanitizeSummary(self.media["description"])
+    self.countryOfOrigin = self.media["countryOfOrigin"]
     self.isAdult = self.media["isAdult"]
     self.status = self.media["status"]
     self.volumes = self.media["volumes"]
