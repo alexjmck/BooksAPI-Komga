@@ -17,6 +17,7 @@ query($search: String) {
     media(search: $search, type: MANGA, sort: POPULARITY_DESC){
       id
       type
+      countryOfOrigin
       title {
         english
         romaji
@@ -115,7 +116,7 @@ def lookupSeries(series): # pass Series class, returns type AniListSeries
   # Select matching series:
   print("------\n")
   print("For: "+ series.name)
-  print("\nSelect the following matching series from AniList:\n")
+  print("\nSelect the following matching series from AniList:")
 
   seriesOptions = []
   inputted = None
@@ -126,16 +127,16 @@ def lookupSeries(series): # pass Series class, returns type AniListSeries
 
   # Print Name for selection. Sometimes english returns as None. 
     if resultSeries["title"]["english"] != None:
-      print(str(len(seriesOptions))+ ") "+ str(resultSeries["id"]) + " -  " +resultSeries["title"]["english"]+ " - " + resultSeries["title"]["romaji"])
-      print(" ---- Type: "+ resultSeries["type"])
-      print(" ---- Synonyms: "+ synonymsString)
+      print(" \n"+str(len(seriesOptions))+ ") "+ str(resultSeries["id"]) + " -  " +resultSeries["title"]["english"]+ " - " + resultSeries["title"]["romaji"])
     elif resultSeries["title"]["romaji"] != None:
-      print(str(len(seriesOptions))+ ") "+ str(resultSeries["id"]) + " - " +resultSeries["title"]["romaji"])
+      print(" \n"+str(len(seriesOptions))+ ") "+ str(resultSeries["id"]) + " - " +resultSeries["title"]["romaji"])
     else:
-      print("No English or romaji title")
+      print("\nNo English or romaji title")
       return None
+    print(" ---- Type: "+ resultSeries["type"] + ", "+ resultSeries["countryOfOrigin"])
+    print(" ---- Synonyms: "+ synonymsString)
 
-  inputted = input("Enter the correct matching number. If none type 'n': ")
+  inputted = input("\nEnter the correct matching number. If none type 'n': ")
 
   while True: # validate input is a number or 'n'
     if inputted == 'n':
