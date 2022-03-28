@@ -80,9 +80,12 @@ pushJSON = '''
 
 <ul>
 <li>Python 3 (preferably more recent version, My enviroment was python 3.9. I avoided new syntax introduced in python 3.10)</li>
-<li>pip - [Pip for Python](https://pypi.org/project/pip/)</li>
-<li>requests - [Requests: HTTP for Humans™](https://docs.python-requests.org/en/latest/)</li>
+<li>pip - [Pip for Python][1]</li>
+<li>requests - [Requests: HTTP for Humans™][2]</li>
 </ul>
+
+[1]: [https://pypi.org/project/pip/]
+[2]: [https://docs.python-requests.org/en/latest/]
 
 ### Steps
 
