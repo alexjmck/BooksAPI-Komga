@@ -83,7 +83,6 @@ pushJSON = '''
 <li>pip - [Pip for Python][1]</li>
 <li>requests - [Requests: HTTP for Humans™][2]</li>
 </ul>
-
 [1]: [https://pypi.org/project/pip/]
 [2]: [https://docs.python-requests.org/en/latest/]
 
