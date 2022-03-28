@@ -101,7 +101,7 @@ for series in content["content"]:
 	
 
 	try:
-		kp.patchSeries(session, currentSeries, aniListSeries) # passes request session Series and anilist class
+		kp.patchSeries(session, currentSeries, aniListSeries, ignoreLock) # passes request session Series and anilist class
 	except:
 		skippedSeries.append(currentSeries.name)
 		print("Update failed")

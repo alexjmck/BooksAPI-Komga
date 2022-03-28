@@ -115,7 +115,7 @@ def lookupSeries(series): # pass Series class, returns type AniListSeries
   # Select matching series:
   print("------\n")
   print("For: "+ series.name)
-  print("Select the following matching series from AniList:\n")
+  print("\nSelect the following matching series from AniList:\n")
 
   seriesOptions = []
   inputted = None

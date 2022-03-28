@@ -4,7 +4,7 @@ import requests, json
 
 from config import *
 
-def patchSeries(session, komgaSeries, aniListSeries): # pass requests session, Series and anilist class
+def patchSeries(session, komgaSeries, aniListSeries, ignoreLock): # pass requests session, Series and anilist class
 
   # Assign Anilist data to komga object
   # Any locked fields will be ignored
@@ -22,6 +22,19 @@ def patchSeries(session, komgaSeries, aniListSeries): # pass requests session, S
     'JP': "RIGHT_TO_LEFT",
     'KR': " WEBTOON"
   }
+
+  if ignoreLock == True:
+    # Resets locks locally to False
+    komgaSeries.statusLock = False
+    komgaSeries.titleLock = False
+    komgaSeries.titleSortLock = False
+    komgaSeries.summaryLock = False
+    komgaSeries.readingDirectionLock = False
+    komgaSeries.ageRatingLock = False
+    komgaSeries.languageLock = False
+    komgaSeries.genresLock = False
+    komgaSeries.totalBookCountLock = False
+    komgaSeries.tagsLock = False
 
 
   # NOT_YET_RELEASED -> skip
@@ -44,8 +57,7 @@ def patchSeries(session, komgaSeries, aniListSeries): # pass requests session, S
     komgaSeries.titleSortLock = True
 
   # ---- Summary
-  # if komgaSeries.summaryLock == True:
-  if 1==1:
+  if komgaSeries.summaryLock == False:
     komgaSeries.summary = aniListSeries.description
     komgaSeries.summaryLock = True
 
