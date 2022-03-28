@@ -74,6 +74,50 @@ pushJSON = '''
 
 </details>
 
+## Get Started
+
+### Requirements
+
+<ul>
+<li>Python 3 (preferably more recent version, My enviroment was python 3.9. I avoided new syntax introduced in python 3.10)</li>
+<li>pip - [Pip for Python](https://pypi.org/project/pip/)</li>
+<li>requests - [Requests: HTTP for Humans™](https://docs.python-requests.org/en/latest/)</li>
+</ul>
+
+### Steps
+
+The script is configured by copying the config.template.py into config.py. 
+
+```
+# Enter server and credentials here
+
+baseURL="https://example.com" # Include protocol (ie. http:// or https://) and port (if relevant)
+user=""
+pass=""
+```
+
+**Ensure there is no trailing slash in your URL**
+
+Example config:
+```
+# Enter server and credentials here
+
+baseURL="http://192.168.21.12" # Include protocol (ie. http:// or https://) and port (if relevant)
+user="name@email.com"
+pass="mySecretPassword"
+```
+
+Once saved as `config.py`, using a virtual enviroment. I recommend following a tutorial like this one: [Python Virtual Environments: A Primer
+by Real Python](https://realpython.com/python-virtual-environments-a-primer/#using-virtual-environments) (not affiliated)
+
+**Pip** is required. you can install depenancies with
+`pip install -r requirements.txt`
+
+The script will be ready to run. Depending on your python installation:
+`python getMetadata.py` or `python3 getMetadata.py`
+
+
+
 ## Further Plans
 
 FuzzyWuzzy fuzzy strings matching.
