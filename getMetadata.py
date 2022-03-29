@@ -37,6 +37,16 @@ session.headers.update({
 	'accept': '*/*'
 	})
 
+# # Retrieve which list?
+
+# numSeries = None
+# while True:
+# 	try:
+# 		numSeries = int(input("Should we retreive the library in order of most recently added series or in alphabetical order: "))
+# 		break
+# 	except:
+# 		pass
+
 # Retrieve list of series from Komga
 print(" ")
 numSeries = None

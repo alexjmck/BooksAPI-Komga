@@ -18,6 +18,10 @@ def sanitizeName(name): # Try to get clean name without tags
 
 # From https://medium.com/@jorlugaqui/how-to-strip-html-tags-from-a-string-in-python-7cb81a2bbf44
 def sanitizeSummary(text):
-    """Remove html tags from a string"""
-    clean = re.compile('<.*?>')
-    return re.sub(clean, '', text)
+	# Verify text is string not null
+	if type(text) != "string":
+		return None
+
+	# Remove html tags from a string
+	clean = re.compile('<.*?>')
+	return re.sub(clean, '', text)

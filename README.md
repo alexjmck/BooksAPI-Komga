@@ -14,6 +14,11 @@ Ideal folder/series naming should be something like: Name (Year) (Optional Notes
 
 Currently the script asks the user to verify the match before committing to fetch and update the metadata of a series in komga. 
 
+### Demo 
+
+![Script retrieving library and suggesting metadata](img/metatada-retrieval.png "Script retrieving library and suggesting metadata")
+
+
 ## Expected behaviour
 
 You can expect the script to pull all fields from Komga. It will only update *unlocked* fields. When it updates a field it will lock it 
