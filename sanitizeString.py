@@ -11,6 +11,7 @@ def sanitizeName(name): # Try to get clean name without tags
 	tempName3  = tempName2.split(" - ")[0]
 	tempName4 = tempName3.strip() # removes white space
 	return tempName4
+	# Consider remove "!*" where * is char
 
 
 # sanitize html tags from string
@@ -19,7 +20,7 @@ def sanitizeName(name): # Try to get clean name without tags
 # From https://medium.com/@jorlugaqui/how-to-strip-html-tags-from-a-string-in-python-7cb81a2bbf44
 def sanitizeSummary(text):
 	# Verify text is string not null
-	if type(text) != "string":
+	if type(text) != str:
 		return None
 
 	# Remove html tags from a string

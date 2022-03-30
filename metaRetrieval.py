@@ -152,7 +152,7 @@ def lookupSeries(series): # pass Series class, returns type AniListSeries
     if 0 <= inputted and inputted < len(seriesOptions):
       break
     else:
-      inputted = type("Input must be one of the above or 'n': ")
+      inputted = input("Input must be one of the above or 'n': ")
       continue
 
 

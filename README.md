@@ -125,9 +125,11 @@ The script will be ready to run. Depending on your python installation:
 
 ## Further Plans
 
-**remove html formating in summaries**
-
 **List Synonyms for titles in the matching, and year**
+
+need to add format to identify manga from novela entries
+
+maybe list vol number too?
 
 Manga (South Korean) should make reading directions webtoon
 
