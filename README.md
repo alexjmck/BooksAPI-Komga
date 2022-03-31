@@ -125,7 +125,9 @@ The script will be ready to run. Depending on your python installation:
 
 ## Further Plans
 
-**List Synonyms for titles in the matching, and year**
+Save progress in file so it can be automatically skipped over
+
+List years in matching
 
 need to add format to identify manga from novela entries
 

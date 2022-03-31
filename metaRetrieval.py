@@ -14,7 +14,7 @@ query($search: String) {
       lastPage
       hasNextPage
     }
-    media(search: $search, type: MANGA, sort: POPULARITY_DESC){
+    media(search: $search, type: MANGA){
       id
       type
       countryOfOrigin
