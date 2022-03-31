@@ -14,10 +14,11 @@ query($search: String) {
       lastPage
       hasNextPage
     }
-    media(search: $search, type: MANGA){
+    media(search: $search, type: MANGA, sort: POPULARITY_DESC){
       id
       type
       countryOfOrigin
+      format
       title {
         english
         romaji
@@ -133,7 +134,7 @@ def lookupSeries(series): # pass Series class, returns type AniListSeries
     else:
       print("\nNo English or romaji title")
       return None
-    print(" ---- Type: "+ resultSeries["type"] + ", "+ resultSeries["countryOfOrigin"])
+    print(" ---- Format: "+resultSeries["format"] + ", "+ resultSeries["countryOfOrigin"])
     print(" ---- Synonyms: "+ synonymsString)
 
   inputted = input("\nEnter the correct matching number. If none type 'n': ")
