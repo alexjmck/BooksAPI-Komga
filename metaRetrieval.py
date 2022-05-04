@@ -19,6 +19,7 @@ query($search: String) {
       type
       countryOfOrigin
       format
+      genres
       title {
         english
         romaji
@@ -125,6 +126,7 @@ def lookupSeries(series): # pass Series class, returns type AniListSeries
   for resultSeries in content["data"]["Page"]["media"]:
     seriesOptions.append(int(resultSeries["id"]))
     synonymsString = ' \n -------- '.join(resultSeries["synonyms"])
+    genresString = ', '.join(resultSeries["genres"])
 
   # Print Name for selection. Sometimes english returns as None. 
     if resultSeries["title"]["english"] != None:
@@ -134,8 +136,14 @@ def lookupSeries(series): # pass Series class, returns type AniListSeries
     else:
       print("\nNo English or romaji title")
       return None
-    print(" ---- Format: "+resultSeries["format"] + ", "+ resultSeries["countryOfOrigin"])
+    
+    if resultSeries["format"] != None and resultSeries["countryOfOrigin"] != None:
+      print(" ---- Format: "+resultSeries["format"] + ", "+ resultSeries["countryOfOrigin"])
+    elif resultSeries["format"] != None:
+      print(" ---- Format: "+resultSeries["format"])
+
     print(" ---- Synonyms: "+ synonymsString)
+    print(" ---- Genres: "+ genresString)
 
   inputted = input("\nEnter the correct matching number. If none type 'n': ")
 
