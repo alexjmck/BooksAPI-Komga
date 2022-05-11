@@ -150,20 +150,26 @@ def lookupSeries(series): # pass Series class, returns type AniListSeries
   while True: # validate input is a number or 'n'
     if inputted == 'n':
       print("------\n")
-      print("None matched, series skipped\n")
-      return None
+      # Manual input of anilist code
+      aniListID = input("\nEnter custom AniList ID? If no, type 'n': ")
+      try:
+        seriesOptions[0]= int(aniListID)
+        inputted = 0
+        break
+      except:
+        print("None matched, series skipped\n")
+        return None
     try:
       inputted = int(inputted) - 1
     except:
-      inputted = input("Input must be one of the above or 'n': ")
+      inputted = input("Input must be one of the above, 'c' or 'n': ")
       continue
 
     if 0 <= inputted and inputted < len(seriesOptions):
       break
     else:
-      inputted = input("Input must be one of the above or 'n': ")
+      inputted = input("Input must be one of the above, 'c' or 'n': ")
       continue
-
 
   # Look up series by id on AniList
 
