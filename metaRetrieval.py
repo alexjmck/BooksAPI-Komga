@@ -162,13 +162,13 @@ def lookupSeries(series): # pass Series class, returns type AniListSeries
     try:
       inputted = int(inputted) - 1
     except:
-      inputted = input("Input must be one of the above, 'c' or 'n': ")
+      inputted = input("Input must be one of the above or 'n': ")
       continue
 
     if 0 <= inputted and inputted < len(seriesOptions):
       break
     else:
-      inputted = input("Input must be one of the above, 'c' or 'n': ")
+      inputted = input("Input must be one of the above or 'n': ")
       continue
 
   # Look up series by id on AniList
