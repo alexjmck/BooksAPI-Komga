@@ -20,7 +20,9 @@ def patchSeries(session, komgaSeries, aniListSeries, ignoreLock): # pass request
 
   readingDirectionDict = {
     'JP': "RIGHT_TO_LEFT",
-    'KR': " WEBTOON"
+    'KR': " WEBTOON",
+    'CN': "RIGHT_TO_LEFT",
+    'TW': "RIGHT_TO_LEFT"
   }
 
   if ignoreLock == True:
@@ -63,8 +65,10 @@ def patchSeries(session, komgaSeries, aniListSeries, ignoreLock): # pass request
 
   # ---- reading direction
   if komgaSeries.readingDirectionLock == False:
-    komgaSeries.readingDirection = readingDirectionDict[aniListSeries.countryOfOrigin]
-    komgaSeries.readingDirectionLock = True
+    komgaSeries.readingDirection = readingDirectionDict.get(aniListSeries.countryOfOrigin) # return None if country missmatch
+    
+    if komgaSeries.readingDirection != None:
+      komgaSeries.readingDirectionLock = True
 
   # ---- Age rating
   if komgaSeries.ageRatingLock == False and aniListSeries.isAdult == True:
