@@ -25,16 +25,16 @@ class Series:
 
     self.publisher = self.metadataJSON["publisher"]
     self.publisherLock = self.metadataJSON["publisherLock"]
-    
+
     self.readingDirection = self.metadataJSON["readingDirection"]
     self.readingDirectionLock = self.metadataJSON["readingDirectionLock"]
-    
+
     self.ageRating = self.metadataJSON["ageRating"]
     self.ageRatingLock = self.metadataJSON["ageRatingLock"]
 
     self.language = self.metadataJSON["language"]
     self.languageLock = self.metadataJSON["languageLock"]
-    
+
     self.genres = self.metadataJSON["genres"]
     self.genresLock = self.metadataJSON["genresLock"]
 
@@ -46,7 +46,7 @@ class Series:
 
     self.sharingLabels = self.metadataJSON["sharingLabels"]
     self.sharingLabelsLock = self.metadataJSON["sharingLabelsLock"]
-  
+
   def printName(self):
     print("Series Name: " + self.name)
 
