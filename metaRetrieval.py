@@ -27,7 +27,7 @@ query($search: String) {
       }
       synonyms
     }
-    
+
   }
 }
 '''
@@ -136,7 +136,7 @@ def lookupSeries(series): # pass Series class, returns type AniListSeries
     else:
       print("\nNo English or romaji title")
       return None
-    
+
     if resultSeries["format"] != None and resultSeries["countryOfOrigin"] != None:
       print(" ---- Format: "+resultSeries["format"] + ", "+ resultSeries["countryOfOrigin"])
     elif resultSeries["format"] != None:
@@ -179,7 +179,7 @@ def lookupSeries(series): # pass Series class, returns type AniListSeries
     response = requests.post(aniListURL, json={'query': querySeries, 'variables': variablesSeries})
     content = response.json()
     response.raise_for_status()
-    
+
 
     # verify retreived json is correct id
     if content["data"]["Media"]["id"] != seriesOptions[inputted]:

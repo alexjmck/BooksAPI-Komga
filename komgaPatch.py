@@ -50,7 +50,7 @@ def patchSeries(session, komgaSeries, aniListSeries, ignoreLock): # pass request
       komgaSeries.title = aniListSeries.titleRomaji
     else:
       komgaSeries.title = aniListSeries.titleEnglish + " - " + aniListSeries.titleRomaji
-    
+
     komgaSeries.titleLock = True # Lock title
 
   # ---- TitleSort duplicates title
@@ -66,7 +66,7 @@ def patchSeries(session, komgaSeries, aniListSeries, ignoreLock): # pass request
   # ---- reading direction
   if komgaSeries.readingDirectionLock == False:
     komgaSeries.readingDirection = readingDirectionDict.get(aniListSeries.countryOfOrigin) # return None if country missmatch
-    
+
     if komgaSeries.readingDirection != None:
       komgaSeries.readingDirectionLock = True
 
@@ -107,7 +107,7 @@ def patchSeries(session, komgaSeries, aniListSeries, ignoreLock): # pass request
     True: 'true',
     False: 'false'
   }
-  
+
   # input variables to json string
   pushJSONDict = {
   "status": komgaSeries.status,
@@ -140,7 +140,7 @@ def patchSeries(session, komgaSeries, aniListSeries, ignoreLock): # pass request
   # Patch request
   try:
     responsePatch = session.patch(baseURL + "/api/v1/series/" + komgaSeries.seriesid + "/metadata", data=json.dumps(pushJSONDict))
-    
+
     # verify if updated right
     if responsePatch.json() != None:
       print("did not return 204")

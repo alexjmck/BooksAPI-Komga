@@ -123,7 +123,7 @@ while True:
 skippedSeries = []
 
 for series in content["content"]:
-	
+
 	currentSeries = Series(series)
 	# print(series["metadata"])
 	# print("\n")
@@ -136,7 +136,7 @@ for series in content["content"]:
 		continue
 
 	print("\n")
-	
+
 
 	try:
 		kp.patchSeries(session, currentSeries, aniListSeries, ignoreLock) # passes request session Series and anilist class
