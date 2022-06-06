@@ -1,5 +1,5 @@
 # Lookup AniList
-import requests, json
+import requests
 
 from classes import *
 
