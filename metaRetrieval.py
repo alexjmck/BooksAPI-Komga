@@ -111,7 +111,7 @@ def lookupSeries(series): # pass Series class, returns type AniListSeries
     print("Skip series")
     return None
 
-  if 0 == content["data"]["Page"]["pageInfo"]["total"]: # if no results returned, skip manga
+  if content["data"]["Page"]["pageInfo"]["total"] == 0: # if no results returned, skip manga
     print("No series matching search. Skipping series")
     return None
 
@@ -165,7 +165,7 @@ def lookupSeries(series): # pass Series class, returns type AniListSeries
       inputted = input("Input must be one of the above or 'n': ")
       continue
 
-    if 0 <= inputted and inputted < len(seriesOptions):
+    if inputted <= 0 and inputted < len(seriesOptions):
       break
     else:
       inputted = input("Input must be one of the above or 'n': ")
