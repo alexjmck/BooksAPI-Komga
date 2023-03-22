@@ -1,6 +1,6 @@
 # A script to retrieve metadata from AniList for Komga.
 
-import requests
+import requests, sys
 
 import metaRetrieval as mr
 

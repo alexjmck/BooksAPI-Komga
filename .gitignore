@@ -152,3 +152,8 @@ cython_debug/
 #.idea/
 config.py
 
+guiMatcher.py
+image0.png
+image1.png
+image2.png
+.DS_Store

@@ -49,6 +49,21 @@ class Series:
 
   def printName(self):
     print("Series Name: " + self.name)
+  
+  def printLocked(self):
+    print("Summary Locked?: " + str(self.summaryLock) + "\n")
+    print("Title Locked?: " + str(self.titleLock) + "\n")
+    print("Title Sort Locked?: " + str(self.titleSortLock) + "\n")
+    print("Status Locked?: " + str(self.statusLock) + "\n")
+    print("Publisher Locked?: " + str(self.publisherLock)+ "\n")
+    print("Reading Direction Locked?: " + str(self.readingDirectionLock)+ "\n")
+    print("Age Rating Locked?: " + str(self.ageRatingLock)+ "\n")
+    print("Language Locked?: " + str(self.languageLock)+ "\n")
+    print("Genres Locked?: " + str(self.genresLock)+ "\n")
+    print("Tags Locked?: " + str(self.tagsLock)+ "\n")
+    print("Total Book Count Locked?: " + str(self.totalBookCountLock)+ "\n")
+    print("Sharing Labels Locked?: " + str(self.sharingLabelsLock) + "\n")
+
 
   def sanitizeName(self):
     return ss.sanitizeName(self.name)
