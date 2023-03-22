@@ -78,7 +78,7 @@ query ($id: Int) {
 }
 '''
 
-# Start of code 
+# Start of code for anilist lookup
 
 aniListURL = "https://graphql.anilist.co"
 
@@ -86,6 +86,8 @@ def lookupSeries(series): # pass Series class, returns type AniListSeries
 
   searchName = series.sanitizeName()# print(searchName)
   variablesList = {'search':searchName}
+  seriesOptions = [] # list of possible matches as series IDs
+  inputted = None # user input for series selection
 
   # get paged results 
 
@@ -111,50 +113,55 @@ def lookupSeries(series): # pass Series class, returns type AniListSeries
     print("Skip series")
     return None
 
-  if 0 == content["data"]["Page"]["pageInfo"]["total"]: # if no results returned, skip manga
-    print("No series matching search. Skipping series")
-    return None
-
-  # Select matching series:
+  # print series title and locked status
   print("------\n")
   print("For: "+ series.name + "\n")
   series.printLocked()
-  print("\nSelect the following matching series from AniList:")
 
-  seriesOptions = []
-  inputted = None
-  # print(content["data"])
-  for resultSeries in content["data"]["Page"]["media"]:
-    seriesOptions.append(int(resultSeries["id"]))
-    synonymsString = ' \n -------- '.join(resultSeries["synonyms"])
-    genresString = ', '.join(resultSeries["genres"])
+  if 0 == content["data"]["Page"]["pageInfo"]["total"]: # if no results returned, enter n
+    
+    print("\nNo series matching search...")
+    seriesOptions.append(0) # add 0 to list to prevent empty array error
+    inputted = 'n'
 
-  # Print Name for selection. Sometimes english returns as None. 
-    if resultSeries["title"]["english"] != None:
-      print(" \n"+str(len(seriesOptions))+ ") "+ str(resultSeries["id"]) + " -  " +resultSeries["title"]["english"]+ " - " + resultSeries["title"]["romaji"])
-    elif resultSeries["title"]["romaji"] != None:
-      print(" \n"+str(len(seriesOptions))+ ") "+ str(resultSeries["id"]) + " - " +resultSeries["title"]["romaji"])
-    else:
-      print("\nNo English or romaji title")
-      return None
+  elif 0 != content["data"]["Page"]["pageInfo"]["total"]: # if results returned, print and select
+    # Select matching series:
+    print("\nSelect the following matching series from AniList:")
 
-    if resultSeries["format"] != None and resultSeries["countryOfOrigin"] != None:
-      print(" ---- Format: "+resultSeries["format"] + ", "+ resultSeries["countryOfOrigin"])
-    elif resultSeries["format"] != None:
-      print(" ---- Format: "+resultSeries["format"])
+    # print(content["data"])
+    for resultSeries in content["data"]["Page"]["media"]:
+      seriesOptions.append(int(resultSeries["id"]))
+      synonymsString = ' \n -------- '.join(resultSeries["synonyms"])
+      genresString = ', '.join(resultSeries["genres"])
 
-    print(" ---- Synonyms: "+ synonymsString)
-    print(" ---- Genres: "+ genresString)
+    # Print Name for selection. Sometimes english returns as None. 
+      if resultSeries["title"]["english"] != None:
+        print(" \n"+str(len(seriesOptions))+ ") "+ str(resultSeries["id"]) + " -  " +resultSeries["title"]["english"]+ " - " + resultSeries["title"]["romaji"])
+      elif resultSeries["title"]["romaji"] != None:
+        print(" \n"+str(len(seriesOptions))+ ") "+ str(resultSeries["id"]) + " - " +resultSeries["title"]["romaji"])
+      else:
+        print("\nNo English or romaji title")
+        return None
 
-  inputted = input("\nEnter the correct matching number. If none type 'n': ")
+      if resultSeries["format"] != None and resultSeries["countryOfOrigin"] != None:
+        print(" ---- Format: "+resultSeries["format"] + ", "+ resultSeries["countryOfOrigin"])
+      elif resultSeries["format"] != None:
+        print(" ---- Format: "+resultSeries["format"])
+
+      print(" ---- Synonyms: "+ synonymsString)
+      print(" ---- Genres: "+ genresString)
+
+      print("\n------\n")
+
+    inputted = input("\nEnter the correct matching number. If none type 'n': ")
 
   while True: # validate input is a number or 'n'
     if inputted == 'n':
-      print("------\n")
       # Manual input of anilist code
       aniListID = input("\nEnter custom AniList ID? If no, type 'n': ")
       try:
         seriesOptions[0]= int(aniListID)
+        # print(seriesOptions[0])
         inputted = 0
         break
       except:
@@ -186,8 +193,17 @@ def lookupSeries(series): # pass Series class, returns type AniListSeries
     if content["data"]["Media"]["id"] != seriesOptions[inputted]:
       print("AniList did not return correct series by id, skipping...")
       return None
-
-    print("\nSeries fetched sucessful!")
+    
+    # print series name
+    if content["data"]["Media"]["title"]["english"] != None:
+      print("\n" + content["data"]["Media"]["title"]["english"] + "\n")
+    elif content["data"]["Media"]["title"]["romaji"] != None:
+      print("\n" + content["data"]["Media"]["title"]["romaji"] + "\n")
+    else:
+      print("\nNo English or romaji title")
+      return None
+    
+    print("Series fetched sucessful!")
 
   except requests.exceptions.HTTPError as errh:
     print(errh)
@@ -212,7 +228,28 @@ def lookupSeries(series): # pass Series class, returns type AniListSeries
   return aniListRetrieved
 
 
+# End of code for anilist lookup
+
+# start of code for mangaupdates lookup
+
+# def lookupMangaupdates(series): # pass Series class, returns type MangaupdatesSeries
+
+#   searchName = series.sanitizeName()# print(searchName)
+
+#   # print(searchName)
+
+#   mangaupdatesURL = "https://www.mangaupdates.com/series.html?search=" + searchName
+
+#   try:
+#     response = requests.get(mangaupdatesURL)
+#     content = response.text
+#     response.raise_for_status()
+
+#   except requests.exceptions.HTTPError as errh:
+#     print(errh)
+#     print("Skip series")
+#     return None
+#   except requests.exceptions.ConnectionError as errc:
 
 
-
-
+# return mangaupdatesRetrieved

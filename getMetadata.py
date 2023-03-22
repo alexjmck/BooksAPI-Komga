@@ -35,16 +35,6 @@ session.headers.update({
 	'accept': '*/*'
 	})
 
-# # Retrieve which list?
-
-# numSeries = None
-# while True:
-# 	try:
-# 		numSeries = int(input("Should we retreive the library in order of most recently added series or in alphabetical order: "))
-# 		break
-# 	except:
-# 		pass
-
 # Retrieve list of series from Komga
 print(" ")
 numSeries = None
@@ -70,7 +60,7 @@ orderRetrieved = 0
 isTrue = True
 while True:
 	orderRetrieved = input("Enter 1, 2, or 3:")
-	print(orderRetrieved)
+	# print(orderRetrieved)
 	try:
 		orderRetrieved = int(orderRetrieved)
 	except:
