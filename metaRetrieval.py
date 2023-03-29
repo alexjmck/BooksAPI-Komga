@@ -36,6 +36,7 @@ querySeries = '''
 query ($id: Int) {
   Media(id: $id, type: MANGA) {
     id
+    idMal
     type
     title {
       romaji
@@ -48,6 +49,7 @@ query ($id: Int) {
     isAdult
     status
     volumes
+    siteUrl
     genres
     tags {
       id

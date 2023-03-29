@@ -1,5 +1,10 @@
 # A script to retrieve metadata from AniList for Komga.
 
+# TODO:
+# Read direection for NOVEL type from anilist
+# Add anilist id to series metadata as URLs
+# Add MAL id to series metadata as URLs
+
 import requests, sys
 
 import metaRetrieval as mr
@@ -9,6 +14,18 @@ import komgaPatch as kp
 from classes import *
 
 # import config.py under verification
+
+# Variables declarations
+
+numSeries = None # Number of series to retrieve
+
+ignoreLock = None # Whether to ignore field locks
+
+skipLock = None # Whether to skip series with field locks
+
+orderRetrieved = 0 # Order to retrieve series 
+
+skippedSeries = [] # List of series that were skipped
 
 # Verify config file
 try:
@@ -37,7 +54,7 @@ session.headers.update({
 
 # Retrieve list of series from Komga
 print(" ")
-numSeries = None
+
 while True:
 	try:
 		numSeries = int(input("How many series should we retreive?: "))
@@ -56,8 +73,6 @@ print(" 1) Alphabetical Order")
 print(" 2) Most recently added")
 print(" 3) Most recently updated")
 
-orderRetrieved = 0
-isTrue = True
 while True:
 	orderRetrieved = input("Enter 1, 2, or 3:")
 	# print(orderRetrieved)
@@ -100,7 +115,6 @@ ignoreLockDict = {
 	"n": False,
 }
 
-ignoreLock = None
 while True:
 	try:
 		ignoreLock = ignoreLockDict[input("Override field locks? (y/n): ")]
@@ -108,15 +122,54 @@ while True:
 	except:
 		pass
 
+while True:
+	try:
+		skipLock = ignoreLockDict[input("Skip series with field locks? (y/n): ")]
+		break
+	except:
+		pass
 
-
-skippedSeries = []
 
 for series in content["content"]:
 
 	currentSeries = Series(series)
 	# print(series["metadata"])
 	# print("\n")
+
+	# Check if series has field locks
+	if skipLock == True:
+		if currentSeries.titleLock == True:
+			print(currentSeries.name + " - locked... skipped")
+			# skippedSeries.append(currentSeries.name)
+			continue
+		if currentSeries.summaryLock == True:
+			print(currentSeries.name + " - locked... skipped")
+			# skippedSeries.append(currentSeries.name)
+			continue
+		if currentSeries.statusLock == True:
+			print(currentSeries.name + " - locked... skipped")
+			# skippedSeries.append(currentSeries.name)
+			continue
+		if currentSeries.ageRatingLock == True:
+			print(currentSeries.name + " - locked... skipped")
+			# skippedSeries.append(currentSeries.name)
+			continue
+		if currentSeries.tagsLock == True:
+			print(currentSeries.name + " - locked... skipped")
+			# skippedSeries.append(currentSeries.name)
+			continue
+		if currentSeries.languageLock == True:
+			print(currentSeries.name + " - locked... skipped")
+			# skippedSeries.append(currentSeries.name)
+			continue
+		if currentSeries.publisherLock == True:
+			print(currentSeries.name + " - locked... skipped")
+			# skippedSeries.append(currentSeries.name)
+			continue
+		if currentSeries.ageRatingLock == True:
+			print(currentSeries.name + " - locked... skipped")
+			# skippedSeries.append(currentSeries.name)
+			continue
 
 	aniListSeries = mr.lookupSeries(currentSeries) # passes Series class
 
