@@ -4,6 +4,7 @@
 # Read direection for NOVEL type from anilist
 # Add anilist id to series metadata as URLs
 # Add MAL id to series metadata as URLs
+# Skip to series with empty description?
 
 import requests, sys
 
@@ -74,7 +75,7 @@ print(" 2) Most recently added")
 print(" 3) Most recently updated")
 
 while True:
-	orderRetrieved = input("Enter 1, 2, or 3:")
+	orderRetrieved = input("Enter 1, 2, or 3: ")
 	# print(orderRetrieved)
 	try:
 		orderRetrieved = int(orderRetrieved)
